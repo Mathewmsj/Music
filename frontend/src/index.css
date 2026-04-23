@@ -1,0 +1,36 @@
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #1a1a18;
+  --muted: #6b6a66;
+  --line: #e8e4dc;
+  --accent: #c45c3e;
+  --accent-soft: rgba(196, 92, 62, 0.12);
+  --ok: #2d6a4f;
+  --bad: #9b2226;
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}

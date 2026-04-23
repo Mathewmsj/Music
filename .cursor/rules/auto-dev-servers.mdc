@@ -1,0 +1,21 @@
+---
+description: 在本仓库会话中自动启动前后端开发服务（若未在运行）
+alwaysApply: true
+---
+
+# 开发服务器：自动启动
+
+在本项目（音乐榜单聚合系统）中工作时，**在需要运行或调试前后端时**，应主动检查并启动开发服务，而不是只告诉用户去执行命令。
+
+## 约定
+
+- **后端**：工作目录 `backend/`，命令  
+  `uvicorn main:app --reload --host 0.0.0.0 --port 8000`  
+  优先使用 `backend/.venv`：`source .venv/bin/activate` 后执行（Windows：`.venv\Scripts\activate`）。若尚未创建环境或缺少依赖，先执行 `python3 -m venv .venv && pip install -r requirements.txt`。
+- **前端**：工作目录 `frontend/`，命令 `npm run dev`（Vite，默认端口 **5173**，`/api` 代理到 `127.0.0.1:8000`）。
+
+## 行为
+
+1. 开始任务前，可查看终端是否已有 uvicorn / vite 在跑；若未运行，则在后台启动上述两个进程（各一条命令）。
+2. 若端口被占用或依赖缺失，根据报错排查（如 `pip install -r requirements.txt`、`npm install`）。
+3. 用户打开页面：`http://127.0.0.1:5173/`（开发模式）。
