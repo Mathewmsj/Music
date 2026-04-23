@@ -38,6 +38,20 @@ npm run dev
 
 开发时 Vite 将 `/api` 代理到 `http://127.0.0.1:8000`。
 
+### 一键启动前后端（开发模式）
+
+```bash
+chmod +x scripts/dev.sh
+./scripts/dev.sh
+```
+
+脚本会自动：
+- 创建 `backend/.venv`（如不存在）并按 `requirements.txt` 安装依赖（仅在依赖变更时重装）
+- 首次安装前端依赖（`frontend/node_modules`）
+- 同时启动后端 `uvicorn`（8000）与前端 `vite`（5173）
+
+按 `Ctrl+C` 会同时停止两个服务。
+
 前端顶部 **「榜单浏览」** 可切换平台、选择榜单，并一键拉取（酷狗 / QQ 支持 `all_pages` 多页合并）。
 
 ### 全榜单 / 全曲扩展 API
