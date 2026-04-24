@@ -1,4 +1,5 @@
 """酷狗 m 站 rank/info 分页拉取（供 chart_api 与 providers 复用）。"""
+from __future__ import annotations
 
 from app.http_client import get_json
 from app.models import ChartSong

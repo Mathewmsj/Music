@@ -1,4 +1,5 @@
 """QQ 音乐巅峰榜 GetDetail 分页拉取，供 overview provider 使用。"""
+from __future__ import annotations
 
 import json
 from urllib.parse import quote
