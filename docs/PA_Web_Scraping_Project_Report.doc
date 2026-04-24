@@ -1,0 +1,157 @@
+PA: Web Scraping Data Service Project Report
+
+Project Title
+Music Chart Aggregation and Insight Platform (Multi-Source Web Scraping Service)
+
+Student
+Mathew
+
+GitHub Repository
+https://github.com/Mathewmsj/Music
+
+Live Deployment
+http://mathew.yunguhs.com
+
+1. Project Overview
+
+This project builds a full web data service around a real information gap in music ranking discovery. Users usually need to open multiple music platforms to understand what is truly popular, because each platform has its own recommendation logic and audience bias. To solve this, the system collects chart data from multiple mainstream music platforms, fuses ranking signals, and provides unified analysis results in a web application.
+
+The core goals are:
+- scrape and normalize chart data from multiple sources,
+- generate fused hot/new charts with an explainable algorithm,
+- provide value-added analytics instead of raw scraped output,
+- deliver a deployable and publicly accessible service.
+
+2. Data Sources
+
+This project currently integrates the following real data sources:
+- NetEase Music
+- QQ Music
+- Kugou Music
+- Migu Music
+- Apple Music RSS
+
+Supported chart types:
+- hot songs
+- new songs
+
+The system supports platform-level chart listing and chart detail retrieval. Different providers are isolated so a failure on one source will not crash the whole aggregation flow.
+
+3. Compliance and Ethics
+
+This project follows practical scraping compliance principles:
+
+1) Rate limiting
+- Request intervals are controlled by HTTP_DELAY_MS (default 200ms) to avoid aggressive traffic.
+
+2) Data minimization
+- Only course-relevant fields are collected (song title, artist, rank, selected metadata).
+- No personal user data is collected.
+
+3) Educational purpose scope
+- The project is for coursework and technical demonstration, not commercial crawling.
+- The fused ranking is an algorithmic synthesis, not an official ranking replacement.
+
+4) Secret management
+- Sensitive configs are handled with environment variables (.env), not hardcoded in source files.
+
+4. Technical Solution and Architecture
+
+4.1 Tech Stack
+- Backend: Python, Starlette, Uvicorn, httpx
+- Frontend: React, TypeScript, Vite
+- Deployment mode: backend can serve frontend static assets in single-port mode
+
+4.2 Architecture Layers
+
+A) Provider/API fetch layer
+- Encapsulates source-specific scraping or API calls for each platform.
+
+B) Normalization and fusion layer
+- Weak normalization of song title/artist to reduce duplicate entries caused by naming variation.
+- Cross-platform ranking fusion is then applied.
+
+C) Insight layer
+- Enriches sampled fused songs with additional metadata and visual analytics.
+- Includes async progress reporting to improve user experience for long analysis tasks.
+
+D) Frontend visualization layer
+- Chart browser per platform
+- Fused ranking tables
+- Song detail modal
+- Insight visualizations and progress UI
+
+4.3 Fusion Algorithm
+
+The project uses Borda-style scoring:
+- In a source chart of length N, rank r gets score (N - r + 1).
+- If the same song appears on multiple platforms, scores are accumulated.
+
+Why this is suitable:
+- simple and explainable,
+- robust for multi-source signal integration,
+- easy to present in a course project report.
+
+5. Implementation Results
+
+5.1 Multi-platform chart aggregation
+- Platform chart listing and detail fetch implemented.
+- Error isolation ensures partial availability when one source fails.
+
+5.2 Fused hot/new chart generation
+- Configurable fusion length (e.g., Top 100).
+- Outputs fused rank, aggregated score, and source appearances.
+
+5.3 Song detail enrichment
+- Supports song-level details such as cover/genre/lyrics metadata where available.
+- Improved handling for “fetched but empty” cases to avoid false success states.
+
+5.4 Insight dashboard (current version)
+- Genre share pie chart
+- Top-5 artist ranking list
+- Song duration distribution (histogram with smooth trend line)
+- Effective lyric length distribution (invalid character/metadata filtering applied)
+
+5.5 Progress feedback and performance UX
+- Asynchronous insight jobs with polling-based progress updates.
+- Progress denominator aligned to actual sample size (not fixed hardcoded value).
+
+6. Deployment and Accessibility
+
+6.1 Repository and documentation
+- Public GitHub repository is available.
+- README includes environment setup and run instructions.
+- requirements.txt and package.json are included for reproducible setup.
+
+6.2 One-command run support
+- scripts/dev.sh added to bootstrap dependencies and start backend/frontend together for development usage.
+
+6.3 Server deployment
+- Single-port deployment mode is used by building frontend static assets and serving them from backend.
+- Service health endpoint (/api/health) verifies runtime status.
+
+7. Reflection
+
+7.1 Challenges
+- Source heterogeneity: APIs and HTML structures vary across platforms.
+- Data quality variance: some songs have incomplete metadata.
+- Environment mismatch during deployment: Python version differences required compatibility handling.
+- Network instability on server: package installation and git operations required retry/alternative workflow.
+
+7.2 Limitations
+- Scraping/API stability depends on third-party source changes.
+- Some platform pagination endpoints can return partial data under certain conditions.
+- Insight quality is bounded by metadata and lyric availability.
+
+7.3 Future Improvements
+- Add caching and scheduled refresh jobs to reduce repeated scraping load.
+- Improve song entity matching strategy for difficult naming variants.
+- Add more analytics dimensions (trend timeline, platform bias comparisons).
+- Improve automated testing and deployment checks.
+
+8. Conclusion
+
+This project delivers an end-to-end, deployable web scraping data service: multi-source chart collection, explainable ranking fusion, and value-added visual insights in a user-facing web app. It addresses a concrete cross-platform information gap while maintaining engineering practicality (error isolation, progress feedback, deployment readiness) and responsible scraping awareness.
+
+The final system satisfies the course requirements across report quality, demonstration capability, accessibility/deployment, and open-source code organization.
+
